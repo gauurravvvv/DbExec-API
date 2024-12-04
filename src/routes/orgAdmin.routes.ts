@@ -7,10 +7,12 @@ const orgAdminController = new OrgAdminController();
 
 router.post("/add", orgAdminController.add);
 
-router.get("/get", orgAdminController.get);
+router.get("/get/:id", orgAdminController.get);
 
 router.put("/update", orgAdminController.update);
 
-router.delete("/delete", orgAdminController.delete);
+router.delete("/delete/:id", orgAdminController.delete);
+
+router.get("/list/:orgId/:page/:limit", orgAdminController.list);
 
 export default router;

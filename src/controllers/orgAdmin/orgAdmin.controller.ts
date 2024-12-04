@@ -4,6 +4,7 @@ import addOrgAdmin from "./addOrgAdmin";
 import getOrgAdmin from "./getOrgAdmin";
 import updateOrgAdmin from "./updateOrgAdmin";
 import deleteOrgAdmin from "./deleteOrgAdmin";
+import listOrgAdmin from "./listOrgAdmin";
 
 class OrgAdminController {
   public add = async (req: Request, res: Response) => {
@@ -20,6 +21,10 @@ class OrgAdminController {
 
   public delete = async (req: Request, res: Response) => {
     deleteOrgAdmin(req, res);
+  };
+
+  public list = async (req: Request, res: Response) => {
+    listOrgAdmin(req, res);
   };
 }
 

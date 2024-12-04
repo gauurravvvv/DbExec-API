@@ -3,7 +3,7 @@ import addOrg from "./addOrg";
 import getOrg from "./getOrg";
 import updateOrg from "./updateOrg";
 import deleteOrg from "./deleteOrg";
-
+import listOrganisation from "./listOrg";
 
 class OrganisationController {
   public add = async (req: Request, res: Response) => {
@@ -20,6 +20,9 @@ class OrganisationController {
 
   public delete = async (req: Request, res: Response) => {
     deleteOrg(req, res);
+  };
+  public list = async (req: Request, res: Response) => {
+    listOrganisation(req, res);
   };
 }
 

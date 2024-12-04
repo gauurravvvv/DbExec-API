@@ -4,11 +4,11 @@ import { CODE, ROLES, STATUS } from "../../../config/config";
 import { User } from "../../db/entity/user.entity";
 import Logger from "../../utility/logger/logger";
 import sendResponse from "../../utility/response";
-import { ORG_ADMIN_PERMISSIONS } from "../../constants/permissions/organisationAdmin";
 import { Organisation } from "../../db/entity/organisation.entity";
+import { ORG_USER_PERMISSIONS } from "../../constants/permissions/user";
 
-const addOrgAdmin = async (req: Request, res: Response) => {
-  Logger.info(`Add Super Admin request`);
+const addUser = async (req: Request, res: Response) => {
+  Logger.info(`Add Org User request`);
 
   const {
     email,
@@ -32,28 +32,28 @@ const addOrgAdmin = async (req: Request, res: Response) => {
     return;
   }
 
-  //create an Organisation Admin
-  const orgAdmin = new User();
-  orgAdmin.firstName = firstName;
-  orgAdmin.lastName = lastName;
-  orgAdmin.email = email;
-  orgAdmin.mobile = mobile;
-  orgAdmin.username = username;
-  orgAdmin.password = MD5(password).toString();
-  orgAdmin.status = STATUS.ACTIVE;
-  orgAdmin.role = ROLES.ORG_ADMIN;
-  orgAdmin.permissions = JSON.stringify(ORG_ADMIN_PERMISSIONS);
-  orgAdmin.organisationName = org.name;
-  orgAdmin.organisationId = org.id;
+  //create an Organisation User
+  const user = new User();
+  user.firstName = firstName;
+  user.lastName = lastName;
+  user.email = email;
+  user.mobile = mobile;
+  user.username = username;
+  user.password = MD5(password).toString();
+  user.status = STATUS.ACTIVE;
+  user.role = ROLES.ORG_USER;
+  user.permissions = JSON.stringify(ORG_USER_PERMISSIONS);
+  user.organisationName = org.name;
+  user.organisationId = org.id;
 
-  await orgAdmin.save();
+  await user.save();
 
   sendResponse(
     res,
     true,
     CODE.SUCCESS,
-    `Organisation Admin created successfully`
+    `Organisation User created successfully`
   );
 };
 
-export default addOrgAdmin;
+export default addUser;

@@ -3,6 +3,7 @@ import addSuperAdmin from "./addSuperAdmin";
 import getSuperAdmin from "./getSuperAdmin";
 import updateSuperAdmin from "./updateSuperAdmin";
 import deleteSuperAdmin from "./deleteSuperAdmin";
+import listSuperAdmin from "./listSuperAdmin";
 
 class SuperAdminController {
   public add = async (req: Request, res: Response) => {
@@ -19,6 +20,10 @@ class SuperAdminController {
 
   public delete = async (req: Request, res: Response) => {
     deleteSuperAdmin(req, res);
+  };
+
+  public list = async (req: Request, res: Response) => {
+    listSuperAdmin(req, res);
   };
 }
 
