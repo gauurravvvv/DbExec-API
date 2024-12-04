@@ -7,10 +7,10 @@ const superAdminController = new SuperAdminController();
 
 router.post("/add", superAdminController.add);
 
-router.get("/get", superAdminController.add);
+router.get("/get", superAdminController.get);
 
-router.put("/update", superAdminController.add);
+router.put("/update", superAdminController.update);
 
-router.delete("/delete", superAdminController.add);
+router.delete("/delete", superAdminController.delete);
 
 export default router;

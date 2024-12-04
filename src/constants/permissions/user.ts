@@ -1,3 +1,3 @@
 export const USER_PERMISSIONS = [
-  { label: "Query Executer", name: "qExecutor", status: true },
+  { label: "Query Executer", value: "qExecutor", status: true },
 ];

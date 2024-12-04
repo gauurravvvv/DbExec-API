@@ -4,37 +4,25 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import morgan from 'morgan';
 import { createServer, Server as HttpServer } from 'http';
-import { Server as SocketIOServer } from 'socket.io';
-
 // File imports
 import authRoutes from './routes/auth.routes';
+import superAdminRoutes from './routes/superAdmin.routes';
+import orgRoutes from './routes/org.routes';
+import orgAdminRoutes from './routes/orgAdmin.routes';
 import Database from './db';
 
 class Server {
 	private app: express.Application;
 	private httpServer: HttpServer;
-	public io: SocketIOServer;
 
 	constructor() {
 		this.app = express();
 		this.httpServer = createServer(this.app);
-		this.io = new SocketIOServer(this.httpServer, {
-			cors: {
-				origin: 'http://localhost:4200', // Adjust this to your Angular app's URL
-				methods: ['GET', 'POST'],
-				allowedHeaders: ['my-custom-header'],
-				credentials: true, // Optional. You might need this if you're sending cookies or other credentials
-			},
-		});
-
 		this.config();
 		this.routerConfig();
 		this.databaseConfig();
 	}
 
-	public getIo(): SocketIOServer {
-		return this.io;
-	}
 	// Configuration
 	private config() {
 		this.app.use(morgan('dev'));
@@ -50,6 +38,9 @@ class Server {
 	// Routes
 	private routerConfig() {
 		this.app.use('/api/v1/auth', authRoutes);
+		this.app.use('/api/v1/super-admin', superAdminRoutes);
+		this.app.use('/api/v1/org', orgRoutes);
+		this.app.use('/api/v1/org-admin', orgAdminRoutes);
 	}
 
 	// Database
