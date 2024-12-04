@@ -52,7 +52,8 @@ const addUser = async (req: Request, res: Response) => {
     res,
     true,
     CODE.SUCCESS,
-    `Organisation User created successfully`
+    `Organisation User created successfully`,
+    user
   );
 };
 

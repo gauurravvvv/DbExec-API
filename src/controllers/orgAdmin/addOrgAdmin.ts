@@ -52,7 +52,8 @@ const addOrgAdmin = async (req: Request, res: Response) => {
     res,
     true,
     CODE.SUCCESS,
-    `Organisation Admin created successfully`
+    `Organisation Admin created successfully`,
+    orgAdmin
   );
 };
 

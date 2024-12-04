@@ -16,7 +16,7 @@ const addOrg = async (req: Request, res: Response) => {
 
   await org.save();
 
-  sendResponse(res, true, CODE.SUCCESS, `Super Admin created successfully`);
+  sendResponse(res, true, CODE.SUCCESS, `Organisation added successfully`, org);
 };
 
 export default addOrg;
