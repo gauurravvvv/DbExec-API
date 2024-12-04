@@ -34,6 +34,7 @@ const login = async (req: Request, res: Response) => {
     isFirstLogin: user.isFirstLogin,
     role: user.role,
     organsation: user.organisationName,
+    permissions: JSON.parse(user.permissions),
   };
 
   user.lastLogin = new Date();

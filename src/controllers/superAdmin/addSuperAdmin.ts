@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
-import sendResponse from "../../utility/response";
 import MD5 from "md5";
-import Logger from "../../utility/logger/logger";
-import { User } from "../../db/entity/user.entity";
 import { CODE, STATUS, SUPER_ADMIN_ORGANISATION } from "../../../config/config";
+import { SUPER_ADMIN_PERMISSIONS } from "../../constants/permissions/superAdmin";
+import { User } from "../../db/entity/user.entity";
+import Logger from "../../utility/logger/logger";
+import sendResponse from "../../utility/response";
 
 const addSuperAdmin = async (req: Request, res: Response) => {
   Logger.info(`Add Super Admin request`);
@@ -19,6 +20,7 @@ const addSuperAdmin = async (req: Request, res: Response) => {
   superAdmin.username = username;
   superAdmin.password = MD5(password).toString();
   superAdmin.status = STATUS.ACTIVE;
+  superAdmin.permissions = JSON.stringify(SUPER_ADMIN_PERMISSIONS);
   superAdmin.organisationName = SUPER_ADMIN_ORGANISATION;
 
   await superAdmin.save();

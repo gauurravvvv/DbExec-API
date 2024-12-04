@@ -5,61 +5,32 @@ import {
   DeleteDateColumn,
   Entity,
   ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   VersionColumn,
   JoinColumn,
 } from "typeorm";
 import { Organisation } from "./organisation.entity";
+import { DatabaseConfig } from "./databaseConfig.entity";
 
 @Entity()
-export class User extends BaseEntity {
+export class DatabaseE extends BaseEntity {
   @PrimaryGeneratedColumn("increment")
   id: string;
 
-  @Column({ nullable: true })
-  firstName!: string;
+  @Column({ nullable: false })
+  name!: string;
 
   @Column({ nullable: true })
-  lastName!: string;
-
-  get fullname(): string {
-    return `${this.firstName} ${this.lastName}`;
-  }
-
-  @Column()
-  email: string;
+  description!: string;
 
   @Column({ nullable: false })
-  role: string;
-
-  @Column({ nullable: true })
   organisationId: string;
 
-  @ManyToOne(() => Organisation, (organisation) => organisation.users)
+  @ManyToOne(() => Organisation, (organisation) => organisation.databases)
   @JoinColumn({ name: "organisationId" })
   organisation: Organisation;
-
-  @Column({ nullable: false })
-  organisationName: string;
-
-  @Column()
-  username: string;
-
-  @Column({ select: false })
-  password!: string;
-
-  @Column({ nullable: true })
-  mobile?: string;
-
-  @Column({ nullable: false })
-  permissions: string;
-
-  @Column({ nullable: false, default: false })
-  isFirstLogin: boolean;
-
-  @Column({ type: "timestamptz", nullable: true })
-  lastLogin: Date;
 
   @Column({
     type: "enum",
@@ -67,13 +38,6 @@ export class User extends BaseEntity {
     default: 1,
   })
   status!: number;
-
-  @Column({
-    type: "enum",
-    enum: [0, 1],
-    default: 0,
-  })
-  isDefault!: number;
 
   @VersionColumn({ select: false })
   version: number;
@@ -95,4 +59,7 @@ export class User extends BaseEntity {
 
   @Column({ nullable: true, select: false })
   deletedBy?: string;
+
+  @OneToOne(() => DatabaseConfig, (config) => config.database)
+  config: DatabaseConfig;
 }
