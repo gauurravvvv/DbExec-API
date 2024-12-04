@@ -1,31 +1,9 @@
-export const SUPER_ADMIN_PERMISSIONS = [
+export const ORG_ADMIN_PERMISSIONS = [
   {
     label: "System Management",
     name: "systemManagement",
     status: true,
     subPermissions: [
-      {
-        label: "Super Admin",
-        name: "superAdmin",
-        status: true,
-        subPermissions: [
-          { label: "Add", name: "addSuperAdmin", status: true },
-          { label: "Update", name: "updateSuperAdmin", status: true },
-          { label: "View", name: "viewSuperAdmin", status: true },
-          { label: "Delete", name: "deleteSuperAdmin", status: true },
-        ],
-      },
-      {
-        label: "Organisation Management",
-        name: "orgManagement",
-        status: true,
-        subPermissions: [
-          { label: "Add", name: "addOrganisation", status: true },
-          { label: "Update", name: "updateOrganisation", status: true },
-          { label: "View", name: "viewOrganisation", status: true },
-          { label: "Delete", name: "deleteOrganisation", status: true },
-        ],
-      },
       {
         label: "Organisation Admin",
         name: "orgAdmin",
