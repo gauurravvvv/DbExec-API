@@ -60,7 +60,13 @@ const addDB = async (req: Request, res: Response) => {
     await dbConfig.save();
 
     Logger.info(`Database and config saved successfully`);
-    return sendResponse(res, true, CODE.SUCCESS, `Database saved successfully`);
+    return sendResponse(
+      res,
+      true,
+      CODE.SUCCESS,
+      `Database saved successfully`,
+      database
+    );
   } catch (error) {
     Logger.error(`Error saving database: ${error.message}`);
     return sendResponse(
