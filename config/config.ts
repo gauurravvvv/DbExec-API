@@ -148,3 +148,5 @@ export const SESSION_STATUS = {
   IN_ACTIVE: 0,
   ACTIVE: 1,
 };
+
+export const CONNECTION_TIMEOUT = 30000000;

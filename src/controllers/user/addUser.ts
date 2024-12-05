@@ -34,6 +34,7 @@ const addUser = async (req: Request, res: Response) => {
 
   //create an Organisation User
   const user = new User();
+
   user.firstName = firstName;
   user.lastName = lastName;
   user.email = email;

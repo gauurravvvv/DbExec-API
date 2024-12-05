@@ -10,6 +10,7 @@ import superAdminRoutes from "./routes/superAdmin.routes";
 import orgRoutes from "./routes/org.routes";
 import orgAdminRoutes from "./routes/orgAdmin.routes";
 import userRoutes from "./routes/user.routes";
+import databaseRoutes from "./routes/database.routes";
 import Database from "./db";
 
 class Server {
@@ -43,6 +44,7 @@ class Server {
     this.app.use("/api/v1/org", orgRoutes);
     this.app.use("/api/v1/org-admin", orgAdminRoutes);
     this.app.use("/api/v1/user", userRoutes);
+    this.app.use("/api/v1/database", databaseRoutes);
   }
 
   // Database
