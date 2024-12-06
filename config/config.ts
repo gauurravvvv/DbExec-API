@@ -150,3 +150,45 @@ export const SESSION_STATUS = {
 };
 
 export const CONNECTION_TIMEOUT = 30000000;
+
+export const REGEX_PATTERNS = {
+  EMAIL: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
+  PASSWORD:
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+  NAME: /^[a-zA-Z\s]+$/,
+  MOBILE: /^[0-9]{10}$/,
+  USERNAME: /^[a-zA-Z0-9._-]{3,30}$/,
+};
+
+export const VALIDATION_MESSAGES = {
+  ID: {
+    REQUIRED: "ID is required",
+    INVALID: "Invalid ID format",
+  },
+  EMAIL: {
+    REQUIRED: "Email is required",
+    INVALID: "Invalid email format",
+  },
+  PASSWORD: {
+    REQUIRED: "Password is required",
+    INVALID:
+      "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character",
+  },
+  USERNAME: {
+    REQUIRED: "Username is required",
+    LENGTH: "Username must be between 3 and 30 characters",
+    INVALID:
+      "Username can only contain letters, numbers, dots, underscores and hyphens",
+  },
+  NAME: {
+    FIRST_REQUIRED: "First name is required",
+    LAST_REQUIRED: "Last name is required",
+    LENGTH: "Name must be between 2 and 50 characters",
+    INVALID: "Name can only contain letters and spaces",
+    REQUIRED: "Name is required",
+  },
+  MOBILE: {
+    REQUIRED: "Mobile number is required",
+    INVALID: "Invalid mobile number format. Must be 10 digits",
+  },
+};

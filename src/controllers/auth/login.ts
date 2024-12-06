@@ -33,6 +33,7 @@ const login = async (req: Request, res: Response) => {
     username: user.username,
     isFirstLogin: user.isFirstLogin,
     role: user.role,
+    organsationId: user.organisationId,
     organsation: user.organisationName,
     permissions: JSON.parse(user.permissions),
   };
@@ -42,7 +43,10 @@ const login = async (req: Request, res: Response) => {
   await user.save();
   const token = createToken(tokenObject);
 
-  sendResponse(res, true, CODE.SUCCESS, `Login Successful`, token);
+  sendResponse(res, true, CODE.SUCCESS, `Login Successful`, {
+    data: user,
+    token,
+  });
 };
 
 export default login;

@@ -9,6 +9,8 @@ const getSuperAdmin = async (req: Request, res: Response) => {
   const { id } = req.params;
   Logger.info(`Get super admin request`);
 
+
+  
   //get a superAdmin
   const superAdmin = await User.findOne(id);
 
