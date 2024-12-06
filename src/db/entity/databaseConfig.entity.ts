@@ -4,7 +4,6 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -17,11 +16,7 @@ export class DatabaseConfig extends BaseEntity {
   @PrimaryGeneratedColumn("increment")
   id: string;
 
-  @Column({ nullable: false })
-  databaseId: string;
-
   @OneToOne(() => DatabaseE, (database) => database.config)
-  @JoinColumn({ name: "databaseId" })
   database: DatabaseE;
 
   @Column({ nullable: false })

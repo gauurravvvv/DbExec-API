@@ -9,8 +9,9 @@ import sendResponse from "../../utility/response";
 const updateDB = async (req: Request, res: Response) => {
   Logger.info(`Update Database request`);
   try {
+
     const {
-      id,
+        id,
       name,
       description,
       status,
@@ -33,8 +34,12 @@ const updateDB = async (req: Request, res: Response) => {
       );
     }
 
-    // Find existing database
-    const database = await DatabaseE.findOne(id);
+    // Find existing database with its config
+    const database = await DatabaseE.findOne({
+      where: { id },
+      relations: ["config", "organisation"]
+    });
+    
     if (!database) {
       return sendResponse(res, false, CODE.NOT_FOUND, `Database not found`);
     }
@@ -44,19 +49,14 @@ const updateDB = async (req: Request, res: Response) => {
     if (organisation && organisation !== database.organisationId) {
       org = await Organisation.findOne(organisation);
       if (!org) {
-        return sendResponse(
-          res,
-          false,
-          CODE.NOT_FOUND,
-          `Organisation not found`
-        );
+        return sendResponse(res, false, CODE.NOT_FOUND, `Organisation not found`);
       }
     }
 
     // Update database entry
-    database.name = name || database.name;
-    database.description = description || database.description;
-    database.status = status || database.status;
+    if (name) database.name = name;
+    if (description) database.description = description;
+    if (status !== undefined) database.status = status;
     if (org) {
       database.organisationId = organisation;
       database.organisation = org;
@@ -64,10 +64,7 @@ const updateDB = async (req: Request, res: Response) => {
     await database.save();
 
     // Find and update database config
-    const dbConfig = await DatabaseConfig.findOne({
-      where: { databaseId: id },
-    });
-    if (!dbConfig) {
+    if (!database.config) {
       return sendResponse(
         res,
         false,
@@ -77,15 +74,33 @@ const updateDB = async (req: Request, res: Response) => {
     }
 
     // Update configuration
-    dbConfig.dbType = type || dbConfig.dbType;
-    dbConfig.hostname = host || dbConfig.hostname;
-    dbConfig.port = port || dbConfig.port;
-    dbConfig.dbName = dbName || dbConfig.dbName;
-    dbConfig.username = username || dbConfig.username;
-    if (password) {
-      dbConfig.password = password;
-    }
-    await dbConfig.save();
+    if (type) database.config.dbType = type;
+    if (host) database.config.hostname = host;
+    if (port) database.config.port = port;
+    if (dbName) database.config.dbName = dbName;
+    if (username) database.config.username = username;
+    if (password) database.config.password = password;
+    
+    await database.config.save();
+
+    // Fetch clean database object for response
+    const updatedDatabase = await DatabaseE.findOne({
+      where: { id: database.id },
+      relations: ["config"],
+      select: ["id", "name", "description", "status", "organisationId", "configId", "createdOn", "updatedOn"]
+    });
+
+    const responseData = {
+      ...updatedDatabase,
+      config: updatedDatabase.config ? {
+        id: updatedDatabase.config.id,
+        dbType: updatedDatabase.config.dbType,
+        hostname: updatedDatabase.config.hostname,
+        port: updatedDatabase.config.port,
+        dbName: updatedDatabase.config.dbName,
+        username: updatedDatabase.config.username
+      } : null
+    };
 
     Logger.info(`Database and config updated successfully`);
     return sendResponse(
@@ -93,7 +108,7 @@ const updateDB = async (req: Request, res: Response) => {
       true,
       CODE.SUCCESS,
       `Database updated successfully`,
-      database
+      responseData
     );
   } catch (error) {
     Logger.error(`Error updating database: ${error.message}`);

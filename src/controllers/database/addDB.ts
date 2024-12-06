@@ -38,19 +38,8 @@ const addDB = async (req: Request, res: Response) => {
       return sendResponse(res, false, CODE.NOT_FOUND, `Organisation not found`);
     }
 
-    // Create and save database entry
-    const database = new DatabaseE();
-    database.name = name;
-    database.description = description;
-    database.status = status;
-    database.organisationId = organisation;
-    database.organisation = org;
-    await database.save();
-
-    // Create and save database config
+    // Create and save database config first
     const dbConfig = new DatabaseConfig();
-    dbConfig.databaseId = database.id;
-    dbConfig.database = database;
     dbConfig.dbType = type;
     dbConfig.hostname = host;
     dbConfig.port = port;
@@ -59,13 +48,47 @@ const addDB = async (req: Request, res: Response) => {
     dbConfig.password = password;
     await dbConfig.save();
 
+    // Create and save database entry with configId
+    const database = new DatabaseE();
+    database.name = name;
+    database.description = description;
+    database.status = status;
+    database.organisationId = organisation;
+    database.organisation = org;
+    database.configId = dbConfig.id;
+    database.config = dbConfig;
+    await database.save();
+
+    // Update database reference in config
+    dbConfig.database = database;
+    await dbConfig.save();
+
+    // Fetch clean database object for response
+    const savedDatabase = await DatabaseE.findOne({
+      where: { id: database.id },
+      relations: ["config"],
+      select: ["id", "name", "description", "status", "organisationId", "configId", "createdOn"]
+    });
+
+    const responseData = {
+      ...savedDatabase,
+      config: savedDatabase.config ? {
+        id: savedDatabase.config.id,
+        dbType: savedDatabase.config.dbType,
+        hostname: savedDatabase.config.hostname,
+        port: savedDatabase.config.port,
+        dbName: savedDatabase.config.dbName,
+        username: savedDatabase.config.username
+      } : null
+    };
+
     Logger.info(`Database and config saved successfully`);
     return sendResponse(
       res,
       true,
       CODE.SUCCESS,
       `Database saved successfully`,
-      database
+      responseData
     );
   } catch (error) {
     Logger.error(`Error saving database: ${error.message}`);

@@ -32,6 +32,13 @@ export class DatabaseE extends BaseEntity {
   @JoinColumn({ name: "organisationId" })
   organisation: Organisation;
 
+  @Column({ nullable: true })
+  configId: string;
+
+  @OneToOne(() => DatabaseConfig, (config) => config.database)
+  @JoinColumn({ name: "configId" })
+  config: DatabaseConfig;
+
   @Column({
     type: "enum",
     enum: [0, 1],
@@ -59,7 +66,4 @@ export class DatabaseE extends BaseEntity {
 
   @Column({ nullable: true, select: false })
   deletedBy?: string;
-
-  @OneToOne(() => DatabaseConfig, (config) => config.database)
-  config: DatabaseConfig;
 }
