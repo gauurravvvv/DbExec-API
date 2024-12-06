@@ -9,12 +9,12 @@ import { CODE } from "../../../config/config";
 const login = async (req: Request, res: Response) => {
   Logger.info(`Login request`);
 
-  const { organsation, username, password } = req.body;
+  const { organisation, username, password } = req.body;
 
   const user: User = await User.findOne({
     where: [
       {
-        organisationName: organsation,
+        organisationName: organisation,
         username: username,
         password: MD5(password),
       },
@@ -44,7 +44,7 @@ const login = async (req: Request, res: Response) => {
   const token = createToken(tokenObject);
 
   sendResponse(res, true, CODE.SUCCESS, `Login Successful`, {
-    data: user,
+    user,
     token,
   });
 };
