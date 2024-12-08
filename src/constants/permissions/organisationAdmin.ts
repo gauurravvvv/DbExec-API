@@ -1,30 +1,27 @@
 export const ORG_ADMIN_PERMISSIONS = [
   {
+    label: "Dashboard",
+    value: "adminDashboard",
+    status: true,
+    icon: "fas fa-house",
+  },
+  {
     label: "System Management",
     value: "systemManagement",
     status: true,
+    icon: "fas fa-users-cog",
     subPermissions: [
       {
         label: "Organisation Admin",
         value: "orgAdmin",
         status: true,
-        subPermissions: [
-          { label: "Add", value: "addOrgAdmin", status: true },
-          { label: "Update", value: "updateOrgAdmin", status: true },
-          { label: "View", value: "viewOrgAdmin", status: true },
-          { label: "Delete", value: "deleteOrgAdmin", status: true },
-        ],
+        icon: "fas fa-user-tie",
       },
       {
-        label: "User Management",
+        label: "Users",
         value: "userManagement",
         status: true,
-        subPermissions: [
-          { label: "Add", value: "addUser", status: true },
-          { label: "Update", value: "updateUser", status: true },
-          { label: "View", value: "viewUser", status: true },
-          { label: "Delete", value: "deleteUser", status: true },
-        ],
+        icon: "fas fa-users",
       },
     ],
   },
@@ -32,55 +29,52 @@ export const ORG_ADMIN_PERMISSIONS = [
     label: "Databse Management",
     value: "databaseManagement",
     status: true,
+    icon: "fas fa-database",
     subPermissions: [
       {
         label: "Setup DB",
         value: "setupDB",
         status: true,
-        subPermissions: [
-          { label: "Create", value: "createDb", status: true },
-          { label: "View", value: "viewDb", status: true },
-          { label: "Delete", value: "deleteDb", status: true },
-        ],
+        icon: "fas fa-wrench",
       },
       {
         label: "Configure DB",
         value: "configureDB",
         status: true,
+        icon: "fas fa-sliders",
         subPermissions: [
           {
             label: "Schema",
             value: "dbSchema",
             status: true,
-            subPermissions: [
-              { label: "Create", value: "createDbSchema", status: true },
-              { label: "Modify", value: "modifyDbSchema", status: true },
-              { label: "View", value: "viewDbSchema", status: true },
-            ],
+            icon: "fas fa-file-lines",
           },
           {
             label: "Role",
-            value: "dbRole",
+            name: "dbRole",
             status: true,
-            subPermissions: [
-              { label: "Create", value: "createDbRole", status: true },
-              { label: "Modify", value: "modifyDbRole", status: true },
-              { label: "View", value: "viewDbRole", status: true },
-            ],
+            icon: "fas fa-shield-halved",
           },
           {
             label: "Table",
-            value: "dbTable",
+            name: "dbTable",
             status: true,
-            subPermissions: [
-              { label: "Create", value: "createDbTable", status: true },
-              { label: "Modify", value: "modifyDbTable", status: true },
-              { label: "View", value: "viewDbTable", status: true },
-            ],
+            icon: "fas fa-table-cells",
           },
         ],
       },
     ],
   },
-  { label: "Query Executer", value: "qExecutor", status: true },
+  {
+    label: "Query Executer",
+    value: "qExecutor",
+    status: true,
+    icon: "fas fa-bold",
+  },
+  {
+    label: "My Profile",
+    value: "myProfile",
+    status: true,
+    icon: "fas fa-user",
+  },
 ];

@@ -11,7 +11,6 @@ const AuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
       // Verify the token's authenticity and decode its content.
       const data: any = verify(token, JWT_SECRET_KEY);
 
-      console.log(data);
       const { role, id, organisation, organisationId, permissions } = data; // Extract user role and ID from the decoded token.
       res.locals.loggedInId = id; // Store the user's ID in the response object.
       res.locals.loggedInRole = role; // Store the user's role in the response object.
